@@ -1,20 +1,21 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react'; // Add useState
+import { useNavigate } from 'react-router-dom'; // Add useNavigate
+import { useAuth } from '../context/AuthContext'; // Add this line
 import axios from 'axios';
 
 function PostJob() {
+    const { token } = useAuth(); // Use token from AuthContext
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [location, setLocation] = useState('');
-    const [error, setError] = useState('');
     const [salary, setSalary] = useState('');
+    const [error, setError] = useState('');
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const token = localStorage.getItem('token');
-            const response = await axios.post('/api/jobs', {
+            await axios.post('/api/jobs', {
                 title,
                 description,
                 location,

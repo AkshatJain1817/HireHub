@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'; // Add useState, useEffect
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext'; // Add this line
 import axios from 'axios';
 
 function CandidateDashboard() {
+    const { token } = useAuth();
     const [profile, setProfile] = useState(null);
     const [applications, setApplications] = useState([]);
     const [error, setError] = useState('');
@@ -13,14 +15,11 @@ function CandidateDashboard() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const token = localStorage.getItem('token');
-                // Fetch candidate profile
                 const profileResponse = await axios.get('/api/auth/candidate/profile', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setProfile(profileResponse.data);
 
-                // Fetch applications
                 const applicationsResponse = await axios.get('/api/applications', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
@@ -30,12 +29,11 @@ function CandidateDashboard() {
             }
         };
         fetchData();
-    }, []);
+    }, [token]);
 
     const handleProfileUpdate = async (e) => {
         e.preventDefault();
         try {
-            const token = localStorage.getItem('token');
             const response = await axios.put('/api/auth/candidate/profile', updatedProfile, {
                 headers: { Authorization: `Bearer ${token}` }
             });

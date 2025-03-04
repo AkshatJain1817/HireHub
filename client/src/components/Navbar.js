@@ -1,20 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaUserCircle, FaSearch } from 'react-icons/fa';
+import { useAuth } from '../context/AuthContext'; // Add this line
 import axios from 'axios';
 
 function Navbar() {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [role, setRole] = useState('');
-    const [searchTerm, setSearchTerm] = useState('');
+    const { token, role, setToken, setRole, isAuthenticated } = useAuth();
     const navigate = useNavigate();
+    const [searchTerm, setSearchTerm] = React.useState('');
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        const storedRole = localStorage.getItem('role');
-        setIsAuthenticated(!!token);
-        setRole(storedRole || '');
-
         const checkToken = async () => {
             if (token) {
                 try {
@@ -22,20 +17,16 @@ function Navbar() {
                         headers: { Authorization: `Bearer ${token}` }
                     });
                 } catch (error) {
-                    localStorage.removeItem('token');
-                    localStorage.removeItem('role');
-                    setIsAuthenticated(false);
+                    setToken('');
                     setRole('');
                 }
             }
         };
         checkToken();
-    }, []);
+    }, [token, setToken, setRole]);
 
     const handleLogout = () => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('role');
-        setIsAuthenticated(false);
+        setToken('');
         setRole('');
         navigate('/');
     };

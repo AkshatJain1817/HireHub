@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react'; // Add useState
+import { useParams, useNavigate } from 'react-router-dom'; // Add useNavigate
 import { useDropzone } from 'react-dropzone';
+import { useAuth } from '../context/AuthContext'; // Add this line
 import axios from 'axios';
 
 function ApplyJob() {
     const { id } = useParams(); // Job ID from the URL
+    const { token } = useAuth(); // Use token from AuthContext
     const [error, setError] = useState('');
     const navigate = useNavigate();
     const [file, setFile] = useState(null);
@@ -28,7 +30,6 @@ function ApplyJob() {
         formData.append('jobId', id);
 
         try {
-            const token = localStorage.getItem('token');
             await axios.post('/api/applications', formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,

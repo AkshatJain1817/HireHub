@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext'; // Add this line
 import axios from 'axios';
 
-function CandidateSignup({ setToken, setRole }) {
+function CandidateSignup() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [fullName, setFullName] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const { setToken, setRole } = useAuth();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const response = await axios.post('/api/auth/candidate/register', { email, password, fullName });
             const { token } = response.data;
-            localStorage.setItem('token', token);
-            localStorage.setItem('role', 'candidate');
             setToken(token);
             setRole('candidate');
             navigate('/candidate/dashboard');

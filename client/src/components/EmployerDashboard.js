@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'; // Add useEffect, useState
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext'; // Add this line
 import axios from 'axios';
 
 function EmployerDashboard() {
+    const { token } = useAuth();
     const [jobs, setJobs] = useState([]);
     const [error, setError] = useState('');
 
     useEffect(() => {
         const fetchJobs = async () => {
             try {
-                const token = localStorage.getItem('token');
                 const response = await axios.get('/api/jobs', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
@@ -19,7 +20,7 @@ function EmployerDashboard() {
             }
         };
         fetchJobs();
-    }, []);
+    }, [token]);
 
     if (error) return <p>{error}</p>;
 
@@ -38,7 +39,7 @@ function EmployerDashboard() {
                         <button onClick={async () => {
                             try {
                                 await axios.delete(`/api/jobs/${job._id}`, {
-                                    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+                                    headers: { Authorization: `Bearer ${token}` }
                                 });
                                 setJobs(jobs.filter(j => j._id !== job._id));
                             } catch (error) {

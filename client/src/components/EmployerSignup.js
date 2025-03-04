@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext'; // Add this line
 import axios from 'axios';
 
-function EmployerSignup({ setToken, setRole }) {
+function EmployerSignup() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [companyName, setCompanyName] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const { setToken, setRole } = useAuth();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const response = await axios.post('/api/auth/employer/register', { email, password, companyName });
             const { token } = response.data;
-            localStorage.setItem('token', token);
-            localStorage.setItem('role', 'employer');
             setToken(token);
             setRole('employer');
             navigate('/employer/dashboard');

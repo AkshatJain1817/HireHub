@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'; // Add useState, useEffect
 import { Link, useSearchParams } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext'; // Add this line (optional, if auth is needed)
 import axios from 'axios';
 
 function SearchJobs() {
+    const { token } = useAuth(); // Use token from AuthContext (optional, since jobs are public)
     const [jobs, setJobs] = useState([]);
     const [error, setError] = useState('');
     const [searchParams, setSearchParams] = useSearchParams();

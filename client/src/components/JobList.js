@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'; // Add useEffect, useState
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext'; // Add this line (optional, if auth is needed)
 import axios from 'axios';
 
 function JobList() {
+    const { token } = useAuth(); // Use token from AuthContext (optional, since jobs are public)
     const [jobs, setJobs] = useState([]);
     const [error, setError] = useState('');
 

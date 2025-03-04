@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'; // Add useEffect, useState
 import { useParams, Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext'; // Add this line
 import axios from 'axios';
 
 function JobDetail() {
     const { id } = useParams();
+    const { token, role } = useAuth(); // Use token and role from AuthContext
     const [job, setJob] = useState(null);
     const [error, setError] = useState('');
-    const role = localStorage.getItem('role');
-    const token = localStorage.getItem('token');
 
     useEffect(() => {
         const fetchJob = async () => {
