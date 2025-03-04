@@ -1,0 +1,42 @@
+.home {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    text-align: center;
+  }
+  
+  .featured-jobs {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  
+  .featured-job {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    text-align: left;
+  }
+  
+  .home-links {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  @media (max-width: 768px) {
+    .home {
+      padding: 1rem;
+    }
+    
+    .featured-jobs {
+      grid-template-columns: 1fr;
+    }
+    
+    .home-links {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }

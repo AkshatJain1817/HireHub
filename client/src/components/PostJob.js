@@ -1,7 +1,8 @@
-import React, { useState } from 'react'; // Add useState
-import { useNavigate } from 'react-router-dom'; // Add useNavigate
-import { useAuth } from '../context/AuthContext'; // Add this line
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
+import './PostJob.css';
 
 function PostJob() {
     const { token } = useAuth(); // Use token from AuthContext
@@ -30,22 +31,24 @@ function PostJob() {
     };
 
     return (
-        <div>
-            <h2>Post a Job - HireHub</h2>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            <form onSubmit={handleSubmit}>
+        <div className="post-job">
+            <h2 className="text-2xl font-bold mb-4">Post a Job - HireHub</h2>
+            {error && <p className="error">{error}</p>}
+            <form onSubmit={handleSubmit} className="space-y-4">
                 <input
                     type="text"
                     placeholder="Job Title"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     required
+                    className="form-group"
                 />
                 <textarea
                     placeholder="Job Description"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     required
+                    className="form-group"
                 />
                 <input
                     type="text"
@@ -53,14 +56,16 @@ function PostJob() {
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
                     required
+                    className="form-group"
                 />
                 <input
                     type="number"
                     placeholder="Salary (optional)"
                     value={salary}
                     onChange={(e) => setSalary(e.target.value)}
+                    className="form-group"
                 />
-                <button type="submit">Post Job</button>
+                <button type="submit" className="form-group">Post Job</button>
             </form>
         </div>
     );

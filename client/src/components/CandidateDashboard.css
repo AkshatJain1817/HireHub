@@ -1,0 +1,64 @@
+.candidate-dashboard {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+  }
+  
+  .dashboard-section {
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .form-group {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.375rem;
+    transition: border-color 0.3s;
+  }
+  
+  .form-group:focus {
+    outline: none;
+    border-color: #4299e1;
+    box-shadow: 0 0 0 3px rgba(66,153,225,0.1);
+  }
+  
+  button.form-group {
+    background-color: #48bb78;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button.form-group:hover {
+    background-color: #38a169;
+  }
+  
+  .bg-gray-500 {
+    background-color: #718096;
+  }
+  
+  .application-list {
+    display: grid;
+    gap: 1rem;
+  }
+  
+  @media (max-width: 768px) {
+    .candidate-dashboard {
+      padding: 1rem;
+    }
+    
+    .dashboard-section {
+      padding: 1rem;
+    }
+    
+    .flex-col {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }

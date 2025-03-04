@@ -1,8 +1,9 @@
-import React, { useState } from 'react'; // Add useState
-import { useParams, useNavigate } from 'react-router-dom'; // Add useNavigate
+import React, { useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useDropzone } from 'react-dropzone';
-import { useAuth } from '../context/AuthContext'; // Add this line
+import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
+import './ApplyJob.css';
 
 function ApplyJob() {
     const { id } = useParams(); // Job ID from the URL
@@ -43,15 +44,15 @@ function ApplyJob() {
     };
 
     return (
-        <div>
-            <h2>Apply for Job - HireHub</h2>
-            <p>Apply for the job you selected.</p>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            <form onSubmit={handleSubmit}>
-                <div {...getRootProps()}>
+        <div className="apply-job">
+            <h2 className="text-2xl font-bold mb-4">Apply for Job - HireHub</h2>
+            <p className="mb-4">Apply for the job you selected.</p>
+            {error && <p className="error">{error}</p>}
+            <form onSubmit={handleSubmit} className="space-y-4">
+                <div {...getRootProps()} className="dropzone">
                     <input {...getInputProps()} />
                     <p>Drag 'n' drop a resume here, or click to select a file (PDF, DOC, DOCX)</p>
-                    {file && <p>Selected file: {file.name}</p>}
+                    {file && <p className="mt-2">Selected file: {file.name}</p>}
                 </div>
                 <button type="submit">Submit Application</button>
             </form>

@@ -1,16 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaUserCircle, FaSearch } from 'react-icons/fa';
-import { useAuth } from '../context/AuthContext'; // Add this line
+import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
+import './Navbar.css';
 
 function Navbar() {
-    const { token, role, setToken, setRole, isAuthenticated } = useAuth();
+    const { isAuthenticated, role, setToken, setRole } = useAuth();
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = React.useState('');
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     useEffect(() => {
         const checkToken = async () => {
+            const token = localStorage.getItem('token');
             if (token) {
                 try {
                     await axios.get('/api/auth/validate', {
@@ -23,7 +26,7 @@ function Navbar() {
             }
         };
         checkToken();
-    }, [token, setToken, setRole]);
+    }, [setToken, setRole]);
 
     const handleLogout = () => {
         setToken('');
@@ -39,44 +42,94 @@ function Navbar() {
     };
 
     return (
-        <nav className="navbar" style={{ backgroundColor: '#333', padding: '1rem', color: 'white' }}>
-            <div className="navbar-content" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', maxWidth: '1200px', margin: '0 auto' }}>
-                <Link to="/" style={{ color: 'white', textDecoration: 'none', fontSize: '1.5rem', fontWeight: 'bold' }}>HireHub</Link>
+        <nav className="navbar">
+            <div className="navbar-content">
+                <Link to="/" className="nav-brand">HireHub</Link>
 
-                <form onSubmit={handleSearch} style={{ flex: 1, margin: '0 2rem' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', backgroundColor: 'white', borderRadius: '4px', padding: '0.5rem' }}>
-                        <FaSearch style={{ color: '#333', marginRight: '0.5rem' }} />
+                <button
+                    className="mobile-menu-btn"
+                    onClick={() => setIsMenuOpen(!isMenuOpen)}
+                >
+                    {isMenuOpen ? '✕' : '☰'}
+                </button>
+
+                <div className="nav-actions">
+                    <form onSubmit={handleSearch} className="search-input">
+                        <FaSearch className="ml-2 text-gray-800" />
                         <input
                             type="text"
                             placeholder="Search jobs..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            style={{ border: 'none', outline: 'none', flex: 1, fontSize: '1rem' }}
+                            className="p-2 border-none outline-none text-gray-800"
                         />
-                    </div>
-                </form>
+                    </form>
 
-                <div className="nav-actions" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                    <Link to="/jobs" style={{ color: 'white', textDecoration: 'none' }}>Job Listings</Link>
+                    <Link to="/jobs" className="nav-actions">Job Listings</Link>
 
                     {isAuthenticated ? (
                         <>
                             <FaUserCircle
-                                size={24}
-                                style={{ cursor: 'pointer', color: 'white' }}
+                                size={24} /* Default size, overridden by CSS */
+                                className="profile-icon"
                                 onClick={() => navigate(role === 'employer' ? '/employer/dashboard' : '/candidate/dashboard')}
                             />
-                            <button onClick={handleLogout} style={{ backgroundColor: '#ff4444', color: 'white', border: 'none', padding: '0.5rem 1rem', borderRadius: '4px', cursor: 'pointer' }}>
+                            <button
+                                onClick={handleLogout}
+                                className="nav-actions"
+                            >
                                 Logout
                             </button>
                         </>
                     ) : (
                         <>
-                            <Link to="/login" style={{ color: 'white', textDecoration: 'none' }}>Login</Link>
-                            <Link to="/signup" style={{ color: 'white', textDecoration: 'none' }}>Sign Up</Link>
+                            <Link to="/login" className="nav-actions">Login</Link>
+                            <Link to="/signup" className="nav-actions">Sign Up</Link>
                         </>
                     )}
                 </div>
+            </div>
+
+            <div className={`mobile-menu ${isMenuOpen ? 'active' : ''}`}>
+                <form onSubmit={handleSearch} className="mobile-menu search-input">
+                    <FaSearch className="ml-2 text-gray-800" />
+                    <input
+                        type="text"
+                        placeholder="Search jobs..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="p-2 border-none outline-none text-gray-800"
+                    />
+                </form>
+
+                <Link to="/jobs" className="mobile-menu-item" onClick={() => setIsMenuOpen(false)}>Job Listings</Link>
+
+                {isAuthenticated ? (
+                    <>
+                        <FaUserCircle
+                            size={24} /* Default size, overridden by CSS */
+                            className="mobile-profile-icon"
+                            onClick={() => {
+                                navigate(role === 'employer' ? '/employer/dashboard' : '/candidate/dashboard');
+                                setIsMenuOpen(false);
+                            }}
+                        />
+                        <button
+                            onClick={() => {
+                                handleLogout();
+                                setIsMenuOpen(false);
+                            }}
+                            className="mobile-menu-item"
+                        >
+                            Logout
+                        </button>
+                    </>
+                ) : (
+                    <>
+                        <Link to="/login" className="mobile-menu-item" onClick={() => setIsMenuOpen(false)}>Login</Link>
+                        <Link to="/signup" className="mobile-menu-item" onClick={() => setIsMenuOpen(false)}>Sign Up</Link>
+                    </>
+                )}
             </div>
         </nav>
     );

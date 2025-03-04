@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext'; // Add this line
+import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
+import './Signup.css';
 
 function Signup() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [role, setRole] = useState('candidate'); // Default to candidate
+    const [role, setRole] = useState('candidate');
     const [extraField, setExtraField] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
@@ -31,10 +32,14 @@ function Signup() {
     };
 
     return (
-        <div>
-            <h2>Sign Up for HireHub</h2>
-            <form onSubmit={handleSubmit}>
-                <select value={role} onChange={(e) => setRole(e.target.value)}>
+        <div className="signup-form">
+            <h2 className="text-2xl font-bold mb-4 text-center">Sign Up for HireHub</h2>
+            <form onSubmit={handleSubmit} className="space-y-4">
+                <select
+                    value={role}
+                    onChange={(e) => setRole(e.target.value)}
+                    className="form-group"
+                >
                     <option value="candidate">Job Seeker</option>
                     <option value="employer">Employer</option>
                 </select>
@@ -44,6 +49,7 @@ function Signup() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
+                    className="form-group"
                 />
                 <input
                     type="password"
@@ -51,6 +57,7 @@ function Signup() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
+                    className="form-group"
                 />
                 {role === 'employer' ? (
                     <input
@@ -59,6 +66,7 @@ function Signup() {
                         value={extraField}
                         onChange={(e) => setExtraField(e.target.value)}
                         required
+                        className="form-group"
                     />
                 ) : (
                     <input
@@ -67,10 +75,11 @@ function Signup() {
                         value={extraField}
                         onChange={(e) => setExtraField(e.target.value)}
                         required
+                        className="form-group"
                     />
                 )}
-                {error && <p style={{ color: 'red' }}>{error}</p>}
-                <button type="submit">Sign Up</button>
+                {error && <p className="error">{error}</p>}
+                <button type="submit" className="form-group">Sign Up</button>
             </form>
         </div>
     );
