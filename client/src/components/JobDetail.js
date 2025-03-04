@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 
 function JobDetail() {
     const { id } = useParams();
     const [job, setJob] = useState(null);
     const [error, setError] = useState('');
+    const role = localStorage.getItem('role');
+    const token = localStorage.getItem('token');
 
     useEffect(() => {
         const fetchJob = async () => {
@@ -29,6 +31,9 @@ function JobDetail() {
             <p><strong>Location:</strong> {job.location}</p>
             <p><strong>Salary:</strong> {job.salary ? `$${job.salary}` : 'Not specified'}</p>
             <p><strong>Posted by:</strong> {job.employerId?.companyName}</p>
+            {role === 'candidate' && token && (
+                <Link to={`/jobs/${id}/apply`}>Apply Now</Link>
+            )}
         </div>
     );
 }
