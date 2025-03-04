@@ -1,12 +1,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors'); // Add this line
+const cors = require('cors');
 require('dotenv').config();
+const authRoutes = require('./routes/authRoutes'); // Add this line
+
 const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(cors()); // Add this line to allow cross-origin requests
+app.use(cors());
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI, {
@@ -17,6 +19,9 @@ mongoose.connect(process.env.MONGODB_URI, {
 }).catch(err => {
     console.error('MongoDB connection error:', err);
 });
+
+// Use Auth Routes
+app.use('/api/auth', authRoutes); // Add this line
 
 // Test Route
 app.get('/api', (req, res) => {
