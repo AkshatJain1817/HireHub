@@ -9,7 +9,7 @@ function CandidateDashboard() {
         const fetchApplications = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get('/api/applications', { // You'll need to create this endpoint later
+                const response = await axios.get('/api/applications', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setApplications(response.data);
@@ -30,7 +30,9 @@ function CandidateDashboard() {
             <ul>
                 {applications.map(application => (
                     <li key={application._id}>
-                        {application.job?.title || 'Job Title'} - Status: {application.status || 'Pending'}
+                        {application.jobId?.title || 'Job Title'} - 
+                        Location: {application.jobId?.location || 'Not specified'} - 
+                        Status: {application.status || 'Pending'}
                     </li>
                 ))}
             </ul>
