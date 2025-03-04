@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-function Signup() {
+function Signup({ setToken, setRole }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [role, setRole] = useState('candidate'); // Default to candidate
-    const [extraField, setExtraField] = useState(''); // For companyName or fullName
+    const [role, setLocalRole] = useState('candidate'); // Default to candidate
+    const [extraField, setExtraField] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
@@ -19,8 +19,11 @@ function Signup() {
             } else {
                 response = await axios.post('/api/auth/candidate/register', { email, password, fullName: extraField });
             }
-            localStorage.setItem('token', response.data.token);
+            const { token } = response.data;
+            localStorage.setItem('token', token);
             localStorage.setItem('role', role);
+            setToken(token);
+            setRole(role);
             navigate(role === 'candidate' ? '/candidate/dashboard' : '/employer/dashboard');
         } catch (error) {
             setError(error.response.data.message || 'Signup failed');
@@ -31,7 +34,7 @@ function Signup() {
         <div>
             <h2>Sign Up for HireHub</h2>
             <form onSubmit={handleSubmit}>
-                <select value={role} onChange={(e) => setRole(e.target.value)}>
+                <select value={role} onChange={(e) => setLocalRole(e.target.value)}>
                     <option value="candidate">Job Seeker</option>
                     <option value="employer">Employer</option>
                 </select>

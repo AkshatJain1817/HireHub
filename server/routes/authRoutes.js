@@ -72,4 +72,8 @@ router.post('/candidate/login', async (req, res) => {
     }
 });
 
+router.get('/validate', authMiddleware, (req, res) => {
+    res.json({ message: 'Token is valid', user: { id: req.user.id, role: req.user.role } });
+});
+
 module.exports = router;

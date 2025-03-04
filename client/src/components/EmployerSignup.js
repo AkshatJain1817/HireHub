@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-function EmployerSignup() {
+function EmployerSignup({ setToken, setRole }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [companyName, setCompanyName] = useState('');
@@ -13,8 +13,11 @@ function EmployerSignup() {
         e.preventDefault();
         try {
             const response = await axios.post('/api/auth/employer/register', { email, password, companyName });
-            localStorage.setItem('token', response.data.token);
+            const { token } = response.data;
+            localStorage.setItem('token', token);
             localStorage.setItem('role', 'employer');
+            setToken(token);
+            setRole('employer');
             navigate('/employer/dashboard');
         } catch (error) {
             setError(error.response.data.message || 'Signup failed');

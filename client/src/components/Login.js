@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-function Login() {
+function Login({ setToken, setRole }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [role, setRole] = useState('candidate'); // Default to candidate
+    const [role, setLocalRole] = useState('candidate'); // Default to candidate
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
@@ -13,8 +13,11 @@ function Login() {
         e.preventDefault();
         try {
             const response = await axios.post(`/api/auth/${role}/login`, { email, password });
-            localStorage.setItem('token', response.data.token);
+            const { token } = response.data;
+            localStorage.setItem('token', token);
             localStorage.setItem('role', role);
+            setToken(token);
+            setRole(role);
             navigate(role === 'candidate' ? '/candidate/dashboard' : '/employer/dashboard');
         } catch (error) {
             setError(error.response.data.message || 'Login failed');
@@ -25,7 +28,7 @@ function Login() {
         <div>
             <h2>Login to HireHub</h2>
             <form onSubmit={handleSubmit}>
-                <select value={role} onChange={(e) => setRole(e.target.value)}>
+                <select value={role} onChange={(e) => setLocalRole(e.target.value)}>
                     <option value="candidate">Job Seeker</option>
                     <option value="employer">Employer</option>
                 </select>

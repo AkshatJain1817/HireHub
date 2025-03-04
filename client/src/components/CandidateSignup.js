@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-function CandidateSignup() {
+function CandidateSignup({ setToken, setRole }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [fullName, setFullName] = useState('');
@@ -13,8 +13,11 @@ function CandidateSignup() {
         e.preventDefault();
         try {
             const response = await axios.post('/api/auth/candidate/register', { email, password, fullName });
-            localStorage.setItem('token', response.data.token);
+            const { token } = response.data;
+            localStorage.setItem('token', token);
             localStorage.setItem('role', 'candidate');
+            setToken(token);
+            setRole('candidate');
             navigate('/candidate/dashboard');
         } catch (error) {
             setError(error.response.data.message || 'Signup failed');

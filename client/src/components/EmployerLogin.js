@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-function EmployerLogin() {
+function EmployerLogin({ setToken, setRole }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -12,8 +12,11 @@ function EmployerLogin() {
         e.preventDefault();
         try {
             const response = await axios.post('/api/auth/employer/login', { email, password });
-            localStorage.setItem('token', response.data.token);
+            const { token } = response.data;
+            localStorage.setItem('token', token);
             localStorage.setItem('role', 'employer');
+            setToken(token);
+            setRole('employer');
             navigate('/employer/dashboard');
         } catch (error) {
             setError(error.response.data.message || 'Login failed');
