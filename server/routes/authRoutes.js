@@ -3,6 +3,12 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const Employer = require('../models/Employer');
 const Candidate = require('../models/Candidate');
+const authMiddleware = require('../middleware/auth');
+
+// Add this route for protected access (e.g., dashboard)
+router.get('/dashboard', authMiddleware, (req, res) => {
+    res.json({ message: `Welcome ${req.user.role} with ID ${req.user.id}` });
+});
 
 // Register Employer
 router.post('/employer/register', async (req, res) => {
