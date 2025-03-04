@@ -18,10 +18,21 @@ router.post('/', authMiddleware, async (req, res) => {
     }
 });
 
-// Get all jobs (public access for job seekers)
+// Get all jobs (public access for job seekers) with optional limit and sort
 router.get('/', async (req, res) => {
     try {
-        const jobs = await Job.find().populate('employerId', 'companyName');
+        const { limit, sort } = req.query;
+        const query = {};
+        let jobs = Job.find(query);
+
+        if (limit) {
+            jobs = jobs.limit(parseInt(limit));
+        }
+        if (sort) {
+            jobs = jobs.sort(sort);
+        }
+
+        jobs = await jobs.populate('employerId', 'companyName');
         res.json(jobs);
     } catch (error) {
         res.status(500).json({ message: 'Server error', error });

@@ -76,4 +76,40 @@ router.get('/validate', authMiddleware, (req, res) => {
     res.json({ message: 'Token is valid', user: { id: req.user.id, role: req.user.role } });
 });
 
+// Add these routes at the bottom of authRoutes.js
+router.get('/candidate/profile', authMiddleware, async (req, res) => {
+    try {
+        if (req.user.role !== 'candidate') {
+            return res.status(403).json({ message: 'Only candidates can access their profile' });
+        }
+        const candidate = await Candidate.findById(req.user.id).select('fullName email');
+        if (!candidate) {
+            return res.status(404).json({ message: 'Candidate not found' });
+        }
+        res.json(candidate);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error });
+    }
+});
+
+router.put('/candidate/profile', authMiddleware, async (req, res) => {
+    try {
+        if (req.user.role !== 'candidate') {
+            return res.status(403).json({ message: 'Only candidates can update their profile' });
+        }
+        const { fullName, email } = req.body;
+        const candidate = await Candidate.findByIdAndUpdate(
+            req.user.id,
+            { fullName, email },
+            { new: true, runValidators: true }
+        ).select('fullName email');
+        if (!candidate) {
+            return res.status(404).json({ message: 'Candidate not found' });
+        }
+        res.json(candidate);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error });
+    }
+});
+
 module.exports = router;
