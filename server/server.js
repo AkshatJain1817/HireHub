@@ -2,7 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
-const authRoutes = require('./routes/authRoutes'); // Add this line
+const authRoutes = require('./routes/authRoutes');
+const jobRoutes = require('./routes/jobRoutes'); // Add this line
 
 const app = express();
 
@@ -20,8 +21,9 @@ mongoose.connect(process.env.MONGODB_URI, {
     console.error('MongoDB connection error:', err);
 });
 
-// Use Auth Routes
-app.use('/api/auth', authRoutes); // Add this line
+// Use Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/jobs', jobRoutes); // Add this line
 
 // Test Route
 app.get('/api', (req, res) => {
