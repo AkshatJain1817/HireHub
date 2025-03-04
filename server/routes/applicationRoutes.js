@@ -3,6 +3,7 @@ const router = express.Router();
 const Application = require('../models/Application');
 const authMiddleware = require('../middleware/auth');
 const multer = require('multer');
+const path = require('path'); // Add this line
 
 // Configure multer for file upload
 const storage = multer.diskStorage({
@@ -10,7 +11,7 @@ const storage = multer.diskStorage({
         cb(null, 'uploads/'); // Create an 'uploads' folder in the server directory
     },
     filename: function (req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname)); // Use path.extname
     }
 });
 
