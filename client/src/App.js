@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import Navbar from './components/Navbar';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import EmployerLogin from './components/EmployerLogin';
@@ -12,7 +13,8 @@ import PostJob from './components/PostJob';
 import SearchJobs from './components/SearchJobs';
 import EmployerDashboard from './components/EmployerDashboard';
 import CandidateDashboard from './components/CandidateDashboard';
-import ApplyJob from './components/ApplyJob'; // Add this line
+import ApplyJob from './components/ApplyJob';
+import Home from './components/Home'; // Add this line
 import axios from 'axios';
 
 function App() {
@@ -50,7 +52,7 @@ function App() {
             localStorage.removeItem('token');
         }
         if (role) {
-            localStorage.setItem('role', role);
+            localStorage.getItem('role', role);
         } else {
             localStorage.removeItem('role');
         }
@@ -58,7 +60,9 @@ function App() {
 
     return (
         <div className="App">
+            <Navbar />
             <Routes>
+                <Route path="/" element={<Home />} /> {/* Add this line */}
                 <Route path="/login" element={<Login setToken={setToken} setRole={setRole} />} />
                 <Route path="/signup" element={<Signup setToken={setToken} setRole={setRole} />} />
                 <Route path="/employer/login" element={<EmployerLogin setToken={setToken} setRole={setRole} />} />
@@ -71,8 +75,8 @@ function App() {
                 <Route path="/search-jobs" element={<SearchJobs />} />
                 <Route path="/employer/dashboard" element={role === 'employer' && token ? <EmployerDashboard /> : <Navigate to="/login" />} />
                 <Route path="/candidate/dashboard" element={role === 'candidate' && token ? <CandidateDashboard /> : <Navigate to="/login" />} />
-                <Route path="/jobs/:id/apply" element={role === 'candidate' && token ? <ApplyJob /> : <Navigate to="/login" />} /> {/* Add this line */}
-                <Route path="*" element={<Navigate to={token ? (role === 'employer' ? '/employer/dashboard' : '/candidate/dashboard') : '/login'} />} />
+                <Route path="/jobs/:id/apply" element={role === 'candidate' && token ? <ApplyJob /> : <Navigate to="/login" />} />
+                <Route path="*" element={<Navigate to={token ? (role === 'employer' ? '/employer/dashboard' : '/candidate/dashboard') : '/'} />} /> {/* Updated to redirect to '/' if unauthenticated */}
             </Routes>
         </div>
     );

@@ -1,0 +1,50 @@
+.navbar {
+    background-color: #333;
+    padding: 1rem;
+    color: white;
+}
+
+.navbar-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.nav-actions a, .nav-actions button {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.nav-actions button:hover {
+    background-color: #ff5555;
+}
+
+.search-input {
+    background-color: white;
+    border-radius: 4px;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    flex: 1;
+    margin: 0 2rem;
+}
+
+.search-input input {
+    border: none;
+    outline: none;
+    flex: 1;
+    font-size: 1rem;
+}

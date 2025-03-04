@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 
 function SearchJobs() {
-    const [searchTerm, setSearchTerm] = useState('');
     const [jobs, setJobs] = useState([]);
     const [error, setError] = useState('');
+    const [searchParams, setSearchParams] = useSearchParams();
+    const query = searchParams.get('query') || '';
 
     useEffect(() => {
         const fetchJobs = async () => {
@@ -20,9 +21,9 @@ function SearchJobs() {
     }, []);
 
     const filteredJobs = jobs.filter(job =>
-        job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        job.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        job.location.toLowerCase().includes(searchTerm.toLowerCase())
+        job.title.toLowerCase().includes(query.toLowerCase()) ||
+        job.description.toLowerCase().includes(query.toLowerCase()) ||
+        job.location.toLowerCase().includes(query.toLowerCase())
     );
 
     if (error) return <p>{error}</p>;
@@ -30,12 +31,6 @@ function SearchJobs() {
     return (
         <div>
             <h2>Search Jobs - HireHub</h2>
-            <input
-                type="text"
-                placeholder="Search jobs by title, description, or location"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-            />
             <ul>
                 {filteredJobs.map(job => (
                     <li key={job._id}>
@@ -44,6 +39,7 @@ function SearchJobs() {
                     </li>
                 ))}
             </ul>
+            {filteredJobs.length === 0 && <p>No jobs found matching your search.</p>}
         </div>
     );
 }
