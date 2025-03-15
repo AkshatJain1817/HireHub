@@ -16,7 +16,7 @@ function PostJob() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('/api/jobs', {
+            await axios.post(`${process.env.REACT_APP_API_URL}/api/jobs`, {
                 title,
                 description,
                 location,

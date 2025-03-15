@@ -13,7 +13,7 @@ function JobDetail() {
     useEffect(() => {
         const fetchJob = async () => {
             try {
-                const response = await axios.get(`/api/jobs/${id}`);
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/jobs/${id}`);
                 setJob(response.data);
             } catch (error) {
                 setError('Failed to load job details');

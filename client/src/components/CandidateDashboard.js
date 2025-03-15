@@ -16,12 +16,12 @@ function CandidateDashboard() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const profileResponse = await axios.get('/api/auth/candidate/profile', {
+                const profileResponse = await axios.get(`${process.env.REACT_APP_API_URL}/api/auth/candidate/profile`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setProfile(profileResponse.data);
 
-                const applicationsResponse = await axios.get('/api/applications', {
+                const applicationsResponse = await axios.get(`${process.env.REACT_APP_API_URL}/api/applications`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setApplications(applicationsResponse.data);
@@ -35,7 +35,7 @@ function CandidateDashboard() {
     const handleProfileUpdate = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.put('/api/auth/candidate/profile', updatedProfile, {
+            const response = await axios.put(`${process.env.REACT_APP_API_URL}/api/auth/candidate/profile`, updatedProfile, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setProfile(response.data);

@@ -10,7 +10,7 @@ function Home() {
     useEffect(() => {
         const fetchFeaturedJobs = async () => {
             try {
-                const response = await axios.get('/api/jobs', {
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/jobs`, {
                     params: { limit: 3, sort: '-createdAt' }
                 });
                 setFeaturedJobs(response.data);

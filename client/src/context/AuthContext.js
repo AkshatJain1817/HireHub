@@ -12,7 +12,7 @@ export function AuthProvider({ children }) {
         const checkToken = async () => {
             if (token) {
                 try {
-                    await axios.get('/api/auth/validate', {
+                    await axios.get(`${process.env.REACT_APP_API_URL}/api/auth/validate`, {
                         headers: { Authorization: `Bearer ${token}` }
                     });
                     // Token is valid, do nothing

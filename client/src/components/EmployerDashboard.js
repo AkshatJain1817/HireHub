@@ -13,12 +13,12 @@ function EmployerDashboard() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const jobsResponse = await axios.get('/api/jobs', {
+                const jobsResponse = await axios.get(`${process.env.REACT_APP_API_URL}/api/jobs`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setJobs(jobsResponse.data);
 
-                const applicationsResponse = await axios.get('/api/applications/employer', {
+                const applicationsResponse = await axios.get(`${process.env.REACT_APP_API_URL}/api/applications/employer`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setApplications(applicationsResponse.data);
@@ -31,7 +31,7 @@ function EmployerDashboard() {
 
     const handleStatusUpdate = async (applicationId, newStatus) => {
         try {
-            await axios.put(`/api/applications/${applicationId}/status`, { status: newStatus }, {
+            await axios.put(`${process.env.REACT_APP_API_URL}/api/applications/${applicationId}/status`, { status: newStatus }, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setApplications(applications.map(app =>
@@ -44,7 +44,7 @@ function EmployerDashboard() {
 
     const handleJobDelete = async (jobId) => {
         try {
-            await axios.delete(`/api/jobs/${jobId}`, {
+            await axios.delete(`${process.env.REACT_APP_API_URL}/api/jobs/${jobId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setJobs(jobs.filter(j => j._id !== jobId));

@@ -12,7 +12,7 @@ function JobList() {
     useEffect(() => {
         const fetchJobs = async () => {
             try {
-                const response = await axios.get('/api/jobs');
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/jobs`);
                 setJobs(response.data);
             } catch (error) {
                 setError('Failed to load jobs');

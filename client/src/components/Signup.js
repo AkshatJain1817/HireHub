@@ -18,9 +18,9 @@ function Signup() {
         try {
             let response;
             if (role === 'employer') {
-                response = await axios.post('/api/auth/employer/register', { email, password, companyName: extraField });
+                response = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/employer/register`, { email, password, companyName: extraField });
             } else {
-                response = await axios.post('/api/auth/candidate/register', { email, password, fullName: extraField });
+                response = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/candidate/register`, { email, password, fullName: extraField });
             }
             const { token } = response.data;
             setToken(token);

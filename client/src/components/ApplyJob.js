@@ -31,7 +31,7 @@ function ApplyJob() {
         formData.append('jobId', id);
 
         try {
-            await axios.post('/api/applications', formData, {
+            await axios.post(`${process.env.REACT_APP_API_URL}/api/applications`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     'Content-Type': 'multipart/form-data'
