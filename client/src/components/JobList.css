@@ -1,39 +1,50 @@
 .job-list {
     max-width: 1200px;
-    margin: 2rem auto;
-    padding: 1.5rem;
-  }
-  
-  .job-grid {
+    margin: 3rem auto;
+    padding: 2rem;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border-radius: 1rem;
+}
+
+.job-grid {
     display: grid;
-    gap: 1.5rem;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  }
-  
-  .job-item {
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    margin-top: 2rem;
+}
+
+.job-item {
     background: white;
-    padding: 1.5rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    transition: transform 0.3s;
-  }
-  
-  .job-item:hover {
-    transform: translateY(-2px);
-  }
-  
-  .job-details p {
-    margin: 0.5rem 0;
-    font-size: 0.9rem;
-    color: #4a5568;
-  }
-  
-  @media (max-width: 768px) {
+    padding: 2rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.job-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.job-details p {
+    margin: 0.75rem 0;
+    font-size: 0.95rem;
+    color: #1f2937;
+    line-height: 1.5;
+}
+
+@media (max-width: 768px) {
     .job-list {
-      padding: 1rem;
+        margin: 1.5rem;
+        padding: 1.5rem;
     }
-    
+
     .job-grid {
-      grid-template-columns: 1fr;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
-  }
+
+    .job-item {
+        padding: 1.5rem;
+    }
+}
