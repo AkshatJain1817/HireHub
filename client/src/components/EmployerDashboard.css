@@ -1,52 +1,138 @@
 .employer-dashboard {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 1.5rem;
-  }
-  
-  .job-list, .application-list {
+    max-width: 1250px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background: linear-gradient(135deg, #ffffff, #f1f5f9);
+    border-radius: 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease;
+}
+
+.employer-dashboard:hover {
+    transform: translateY(-5px);
+}
+
+.job-list, .application-list {
     display: grid;
-    gap: 1rem;
-  }
-  
-  .job-item, .application-item {
-    background: white;
-    padding: 1.25rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  }
-  
-  .delete-btn {
-    background-color: #f56565;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.job-item, .application-item {
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.job-item:hover, .application-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+}
+
+.job-item::before, .application-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(to right, #ef4444, #f97316);
+    border-radius: 0.75rem 0.75rem 0 0;
+}
+
+.delete-btn {
+    background: linear-gradient(to right, #f56565, #ef4444);
     color: white;
-    padding: 0.25rem 0.75rem;
+    padding: 0.5rem 1rem;
     border: none;
-    border-radius: 0.375rem;
+    border-radius: 0.5rem;
     cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .delete-btn:hover {
-    background-color: #e53e3e;
-  }
-  
-  select {
-    padding: 0.25rem 0.5rem;
-    border-radius: 0.375rem;
-    border: 1px solid #cbd5e0;
-  }
-  
-  @media (max-width: 768px) {
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.delete-btn:hover {
+    background: linear-gradient(to right, #dc2626, #b91c1c);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.delete-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.4s ease, height 0.4s ease;
+}
+
+.delete-btn:hover::after {
+    width: 150px;
+    height: 150px;
+}
+
+select {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid #d1d5db;
+    background: #f9fafb;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+select:focus {
+    outline: none;
+    border-color: #f97316;
+    box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.15);
+    background: #ffffff;
+}
+
+@media (max-width: 768px) {
     .employer-dashboard {
-      padding: 1rem;
+        padding: 1.5rem;
+        margin: 1.5rem;
+        border-radius: 0.75rem;
     }
     
     .job-item, .application-item {
-      padding: 1rem;
-      font-size: 0.9rem;
+        padding: 1.25rem;
+        font-size: 0.95rem;
     }
     
     .delete-btn {
-      padding: 0.2rem 0.5rem;
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
     }
-  }
+    
+    select {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.95rem;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.job-item, .application-item {
+    animation: fadeIn 0.5s ease-in-out;
+}
