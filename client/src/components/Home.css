@@ -1,42 +1,83 @@
+/* Base Container */
 .home {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 1.5rem;
-    text-align: center;
+  max-width: 1200px;
+  margin: 3rem auto;
+  padding: 2.5rem;
+  background: linear-gradient(135deg, #e0f7fa, #f3e5f5); /* pastel blue & lavender */
+  border-radius: 1.25rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  color: #374151; /* slate gray for text */
+}
+
+/* Job Cards Grid */
+.featured-jobs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+/* Individual Job Card */
+.featured-job {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+  text-align: left;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-left: 6px solid #81e6d9; /* pastel teal accent */
+}
+
+.featured-job:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Links Section */
+.home-links {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.home-links a {
+  padding: 0.75rem 1.5rem;
+  background: #7c3aed; /* pastel purple */
+  color: white;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.home-links a:hover {
+  background: #6b21a8;
+  transform: scale(1.05);
+}
+
+/* Responsive Tweaks */
+@media (max-width: 768px) {
+  .home {
+    padding: 1.75rem;
+    margin: 1.5rem;
   }
-  
+
   .featured-jobs {
-    display: grid;
-    gap: 1.5rem;
-    margin-top: 2rem;
+    grid-template-columns: 1fr;
   }
-  
-  .featured-job {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    text-align: left;
-  }
-  
+
   .home-links {
-    margin-top: 2rem;
-    display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     gap: 1rem;
   }
-  
-  @media (max-width: 768px) {
-    .home {
-      padding: 1rem;
-    }
-    
-    .featured-jobs {
-      grid-template-columns: 1fr;
-    }
-    
-    .home-links {
-      flex-direction: column;
-      gap: 0.5rem;
-    }
+
+  .home-links a {
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
   }
+}
